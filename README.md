@@ -3,7 +3,7 @@
 -->
 ## Integrated Guide
 
-**Using gradle?** See [gradle example](https://github.com/codecov/example-gradle)
+**Using gradle?** See [gradle example](https://github.com/Relesi)
 
 ### Travis Setup
 
@@ -36,13 +36,11 @@ after_success:
   </executions>
 </plugin>
 ```
-## Caveats
+
 ### Private Repos
 Add to your `.travis.yml` file.
 ```yml
-after_success:
-  - bash <(curl -s https://codecov.io/bash) -t uuid-repo-token
-```
+
 
 Development...
 
