@@ -10,7 +10,7 @@ data class Employees (
     val name: String,
     val email: String,
     val password: String,
-    val ssn: String,
+    val ssn: String, //Social Security Number
     val profile: ProfileEnum,
     val companyId: String,
     val hourValue: Double? = 0.0,
