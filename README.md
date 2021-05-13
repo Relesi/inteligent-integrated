@@ -1,6 +1,4 @@
-<!--# [Codecov][1] Kotlin Example
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fcodecov%2Fexample-kotlin.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fcodecov%2Fexample-kotlin?ref=badge_shield)
--->
+[![Build Status](https://www.travis-ci.com/Relesi/inteligent-integrated.svg?branch=master)](https://www.travis-ci.com/Relesi/inteligent-integrated)
 ## Integrated Guide
 
 **Using gradle?** See [gradle example](https://github.com/Relesi)
