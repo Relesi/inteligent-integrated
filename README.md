@@ -43,15 +43,3 @@ Add to your `.travis.yml` file.
 Development...
 
 
-<!--### Coverage Data Beyond the EOF
-
-Kotlin coverage reports may include extra line data that exceeds the real length of the file. Codecov will fix this by extracting the file length from every `.kt` file and append it ot the report.
-
-
-1. More documentation at https://docs.codecov.io
-2. Configure codecov through the `codecov.yml`  https://docs.codecov.io/docs/codecov-yaml
-
-We are happy to help if you have any questions. Please contact email our Support at [support@codecov.io](mailto:support@codecov.io)
-
-
--->
