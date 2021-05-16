@@ -8,7 +8,7 @@
 [![Build Status](https://www.travis-ci.com/Relesi/inteligent-integrated.svg?branch=master)](https://www.travis-ci.com/Relesi/inteligent-integrated)
 ## Integrated Guide
 
-**Using gradle?** See [gradle example](https://github.com/Relesi)
+**Using gradle?** See [gradle example](https://github.com/Relesi/inteligent-integrated/tree/master/gradle/wrapper)
 
 ### Travis Setup
 
@@ -45,6 +45,8 @@ after_success:
 ### Private Repos
 Add to your `.travis.yml` file.
 ```yml
+
+
 
 
 Development...
