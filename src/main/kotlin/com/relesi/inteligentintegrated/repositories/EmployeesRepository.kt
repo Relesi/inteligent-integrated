@@ -1,6 +1,5 @@
 package com.relesi.inteligentintegrated.repositories
 
-import com.relesi.inteligentintegrated.documents.Company
 import com.relesi.inteligentintegrated.documents.Employees
 import org.springframework.data.mongodb.repository.MongoRepository
 

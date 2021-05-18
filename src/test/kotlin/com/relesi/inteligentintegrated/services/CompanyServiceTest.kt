@@ -14,7 +14,6 @@ import org.springframework.test.context.ActiveProfiles
 import kotlin.jvm.Throws
 
 @SpringBootTest
-@ActiveProfiles("test")
 @AutoConfigureDataMongo
 class CompanyServiceTest {
 
@@ -38,6 +37,7 @@ class CompanyServiceTest {
         val company: Company? = companyService?.searchByEin(EIN)
         Assertions.assertNotNull(company)
     }
+
     @Test
     fun testPersistCompany(){
         val company: Company? = companyService?.persist(company())
