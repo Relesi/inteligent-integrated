@@ -1,11 +1,10 @@
 package com.relesi.inteligentintegrated.repositories
 
-import com.relesi.inteligentintegrated.documents.Employees
+import com.relesi.inteligentintegrated.documents.Employee
 import org.springframework.data.mongodb.repository.MongoRepository
 
-interface EmployeeRepository : MongoRepository<Employees, String> {
+interface EmployeeRepository : MongoRepository<Employee, String> {
 
-    fun findByEmail(email: String): Employees?
-
-    fun findBySsn(ssn: String): Employees?
+    fun findByEmail(email: String): Employee?
+    fun findBySsn(ssn: String): Employee?
 }
