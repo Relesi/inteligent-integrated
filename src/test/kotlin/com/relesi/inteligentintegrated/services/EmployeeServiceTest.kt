@@ -18,7 +18,6 @@ import java.util.*
 
 
 @SpringBootTest
-@ActiveProfiles("test")
 @AutoConfigureDataMongo
 class EmployeeServiceTest {
 
