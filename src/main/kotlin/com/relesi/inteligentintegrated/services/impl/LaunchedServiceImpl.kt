@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class LaunchedServiceImpl : LaunchedService {
-    
+
     override fun searchByEmployeeId(employeeId: String, pageRequest: PageRequest): Page<Launched> {
         TODO("Not yet implemented")
     }
