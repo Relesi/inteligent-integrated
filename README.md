@@ -66,22 +66,6 @@ command line parameters on the first run:
     
     ./gradlew -Dhttp.socketTimeout=60000 -Dhttp.connectionTimeout=60000
 
-## Important gradle tasks
-
-clean - clean build results
-dist - assembles the compiler distribution into `dist/kotlinc/` folder
-ideaPlugin - assembles the Kotlin IDEA plugin distribution into `dist/artifacts/ideaPlugin/Kotlin/` folder
-install - build and install all public artifacts into local maven repository
-runIde - build IDEA plugin and run IDEA with it
-coreLibsTest - build and run stdlib, reflect and kotlin-test tests
-gradlePluginTest - build and run gradle plugin tests
-compilerTest - build and run all compiler tests
-ideaPluginTest - build and run all IDEA plugin tests
-
-To reproduce TeamCity build use `-Pteamcity=true` flag. Local builds don't run proguard and have jar compression disabled by default.
-
-
-
 
 Development...
 
