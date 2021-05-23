@@ -8,15 +8,17 @@ import org.springframework.stereotype.Service
 @Service
 class EmployeeServiceImpl (val employeeRepository: EmployeeRepository): EmployeeService {
 
-    override fun persist(employee: Employee): Employee =
-        employeeRepository.save(employee)
+    override
+    fun persist(employee: Employee): Employee = employeeRepository.save(employee)
 
-    override fun searchBySsn(ssn: String): Employee? =
-        employeeRepository.findBySsn(ssn)
+    override
+    fun searchBySsn(ssn: String): Employee? = employeeRepository.findBySsn(ssn)
 
-    override fun searchByEmail(email: String): Employee? = employeeRepository.findByEmail(email)
+    override
+    fun searchByEmail(email: String): Employee? = employeeRepository.findByEmail(email)
 
-    override fun searchById(id: String): Employee? =
+    override
+    fun searchById(id: String): Employee? =
         employeeRepository.findById(id).get()
 
 
