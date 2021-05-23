@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service
 @Service
 class CompanyServiceImpl(val companyRepository: CompanyRepository): CompanyService {
 
-    override fun searchByEin(ein: String): Company? = companyRepository.findByEin(ein)
+    override
+    fun searchByEin(ein: String): Company? = companyRepository.findByEin(ein)
 
-    override fun persist(company: Company): Company = companyRepository.save(company)
+    override
+    fun persist(company: Company): Company = companyRepository.save(company)
 
 
 }
