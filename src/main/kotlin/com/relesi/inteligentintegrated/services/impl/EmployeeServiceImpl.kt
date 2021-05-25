@@ -20,6 +20,4 @@ class EmployeeServiceImpl (val employeeRepository: EmployeeRepository): Employee
     override
     fun searchById(id: String): Employee? =
         employeeRepository.findById(id).get()
-
-
 }
