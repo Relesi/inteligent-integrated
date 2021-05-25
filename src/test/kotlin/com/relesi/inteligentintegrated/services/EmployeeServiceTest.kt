@@ -27,6 +27,11 @@ class EmployeeServiceTest {
     @Autowired
     private val employeeService: EmployeeService? = null
 
+    private fun employee(): Employee =
+        Employee("Name", email, PasswordUtils().generateBCrypt("123456"),
+            ssn, ProfileEnum.ROLE_USER, id)
+
+
     private val email: String = "email@email.com"
     private val ssn: String = "43126751040"
     private val id: String = "1"
@@ -63,10 +68,4 @@ class EmployeeServiceTest {
         val employee: Employee? = this.employeeService?.searchById(id)
         Assertions.assertNotNull(employee)
     }
-
-    private fun employee(): Employee =
-        Employee("Name", email, PasswordUtils().generateBCrypt("123456"),
-            ssn, ProfileEnum.ROLE_USER, id)
-
-
 }

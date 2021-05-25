@@ -25,6 +25,8 @@ class CompanyServiceTest {
 
     private val EIN = "26579219000180"
 
+    private fun company(): Company = Company("Employer Identification Number", EIN, "1")
+
     @BeforeEach
     @Throws(Exception::class)
     fun setUp(){
@@ -43,6 +45,6 @@ class CompanyServiceTest {
         val company: Company? = companyService?.persist(company())
     }
 
-    private fun company(): Company = Company("Employer Identification Number", EIN, "1")
+
 }
 
