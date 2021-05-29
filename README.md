@@ -41,10 +41,18 @@ after_success:
   </executions>
 </plugin>
 ```
+---
+#### Controller
+
+https://spring.io/guides/tutorials/spring-boot-kotlin/
+
+![](screenshots/model-view-controller-architecture.gif)
 
 ### Private Repos
 Add to your `.travis.yml` file.
 ```yml
+
+
 
 The project is built with Gradle. Run Gradle to build the project and to run the tests 
 using the following command on Unix/macOS:
