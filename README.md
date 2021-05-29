@@ -52,29 +52,9 @@ https://spring.io/guides/tutorials/spring-boot-kotlin/
 Add to your `.travis.yml` file.
 ```yml
 
-
-
-The project is built with Gradle. Run Gradle to build the project and to run the tests 
-using the following command on Unix/macOS:
-
-    ./gradlew <tasks-and-options>
-    
-or the following command on Windows:
-
-    gradlew <tasks-and-options>
-
-On the first project configuration gradle will download and setup the dependencies on
-
-         intellij-core is a part of command line compiler and contains only necessary APIs.
-         idea-full is a full blown IntelliJ IDEA Community Edition to be used in the plugin module.
-
-These dependencies are quite large, so depending on the quality of your internet connection 
-you might face timeouts getting them. In this case you can increase timeout by specifying the following 
-command line parameters on the first run: 
-    
-    ./gradlew -Dhttp.socketTimeout=60000 -Dhttp.connectionTimeout=60000
-
-
 Development...
+
+    But, hey what actually MVC is??
+    
 
 
