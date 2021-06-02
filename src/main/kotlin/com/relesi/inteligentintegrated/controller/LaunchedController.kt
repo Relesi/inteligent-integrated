@@ -3,22 +3,22 @@ package com.relesi.inteligentintegrated.controller
 import com.relesi.inteligentintegrated.documents.Employee
 import com.relesi.inteligentintegrated.documents.Launched
 import com.relesi.inteligentintegrated.dtos.LaunchedDto
+import com.relesi.inteligentintegrated.enums.TypeEnum
 import com.relesi.inteligentintegrated.response.Response
 import com.relesi.inteligentintegrated.services.EmployeeService
 import com.relesi.inteligentintegrated.services.LaunchedService
 import org.springframework.beans.factory.annotation.Value
-
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Sort
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.validation.BindingResult
 import org.springframework.validation.ObjectError
-
 import org.springframework.web.bind.annotation.*
-
-import java.text.SimpleDateFormat
 import javax.validation.Valid
+import java.text.SimpleDateFormat
+
 
 @RestController
 @RequestMapping("/api/launched")
@@ -74,12 +74,24 @@ class LaunchedController(val launchedService: LaunchedService, val employeeServi
             return ResponseEntity.badRequest().body(response)
         }
 
-        val launched: Launched = converterLaunchedDto(launchedDto, result)
+        val launched: Launched = converterDtoToLaunched(launchedDto, result)
         launchedService.persist(launched)
         response.date = converterLaunchedDto(launched)
         return ResponseEntity.ok(response)
     }
 
+    private fun converterDtoToLaunched(launchedDto: LaunchedDto, result: BindingResult): Launched {
+        if (launchedDto.id != null){
+            val lanc: Launched? = launchedService.searchById(launchedDto.id!!)
+            if (lanc == null) result.addError(ObjectError("launched", "Launched not found..." ))
+
+        }
+
+        return Launched(dateFormat.parse(launchedDto.date), TypeEnum.valueOf(launchedDto.type!!),
+            launchedDto.employeesId!!, launchedDto.description,
+           launchedDto.localization, launchedDto.id)
+    }
+        
     private fun validateEmployee(launchedDto: LaunchedDto, result: BindingResult) {
         if (launchedDto.employeesId == null) {
             result.addError(ObjectError("employee", "Employee not informed..."))
