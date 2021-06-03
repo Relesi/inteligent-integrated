@@ -26,8 +26,8 @@ class LaunchedController(val launchedService: LaunchedService, val employeeServi
 
     private val  dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
 
-    @Value("\${pagination.qty_by_page}")
-    val qtyByPage: Int = 15
+//    @Value("\${pagination.qty_by_page}")
+//    val qtyByPage: Int = 15
 
     @GetMapping("/employee/{employeeId}")
     fun searchByEmployeeId(@PathVariable("employeeId") employeeId: String,
@@ -38,14 +38,11 @@ class LaunchedController(val launchedService: LaunchedService, val employeeServi
             ResponseEntity<Response<Page<LaunchedDto>>> {
 
         val response: Response<Page<LaunchedDto>> = Response<Page<LaunchedDto>>()
+       // val pageRequest: PageRequest = PageRequest.of(pag, qtyByPage, Sort.Direction.valueOf(dir), ord)
+        //val launcheds: Page<Launched> = launchedService.searchByEmployeeId(employeeId, pageRequest)
+        //val launchedsDto: Page<LaunchedDto> = launcheds.map { launched -> converterLaunchedDto(launched) }
 
-        val pageRequest: PageRequest = PageRequest.of(pag, qtyByPage, Sort.Direction.valueOf(dir), ord)
-
-        val launcheds: Page<Launched> = launchedService.searchByEmployeeId(employeeId, pageRequest)
-
-        val launchedsDto: Page<LaunchedDto> = launcheds.map { launched -> converterLaunchedDto(launched) }
-
-        response.date = launchedsDto
+        //response.date = launchedsDto
         return ResponseEntity.ok(response)
 
     }
@@ -91,7 +88,7 @@ class LaunchedController(val launchedService: LaunchedService, val employeeServi
             launchedDto.employeesId!!, launchedDto.description,
            launchedDto.localization, launchedDto.id)
     }
-        
+
     private fun validateEmployee(launchedDto: LaunchedDto, result: BindingResult) {
         if (launchedDto.employeesId == null) {
             result.addError(ObjectError("employee", "Employee not informed..."))
