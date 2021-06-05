@@ -8,6 +8,7 @@
 [![Build Status](https://www.travis-ci.com/Relesi/inteligent-integrated.svg?branch=master)](https://www.travis-ci.com/Relesi/inteligent-integrated)
 ## Integrated Guide
 
+
 **Using gradle?** See [gradle example](https://github.com/Relesi/inteligent-integrated/tree/master/gradle/wrapper)
 
 
@@ -25,6 +26,8 @@ language: java
 after_success:
   - bash <(curl -s https://codecov.io/bash)
 ```
+---
+
 ### Produce Coverage Reports
 #### Add Jacoco plugin
 ```xml
@@ -55,6 +58,7 @@ https://spring.io/guides/tutorials/spring-boot-kotlin/
 
 ![](screenshots/model-view-controller-architecture.gif)
 
+---
 ### Private Repos
 Add to your `.travis.yml` file.
 ```yml
