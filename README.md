@@ -67,8 +67,4 @@ https://spring.io/guides/tutorials/spring-boot-kotlin/
 
 
 Development...
-
-    But, hey what actually MVC is??
     
-
-
