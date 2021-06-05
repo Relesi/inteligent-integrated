@@ -18,8 +18,6 @@ This template is using [**Gradle Kotlin DSL**](https://docs.gradle.org/current/u
 
 Dependencies are centralized inside the [Dependencies.kt](buildSrc/src/main/java/Dependencies.kt) file in the `buildSrc` folder. This provides convenient auto-completion when writing your gradle files.
 
----
-
 ### Travis Setup
 
 Add to your `.travis.yml` file.
@@ -27,11 +25,17 @@ Add to your `.travis.yml` file.
 language: java
 after_success:
   - bash <(curl -s https://codecov.io/bash)
-```
----
+  
+ Private Repos
+  - Add to your `.travis.yml` file.
 
-### Produce Coverage Reports
-#### Add Jacoco plugin
+```
+
+
+
+
+
+#### Add Jacoco Plugin
 ```xml
 <plugin>
   <groupId>org.jacoco</groupId>
@@ -53,17 +57,14 @@ after_success:
   </executions>
 </plugin>
 ```
----
+
 #### Controller
 
 https://spring.io/guides/tutorials/spring-boot-kotlin/
 
 ![](screenshots/model-view-controller-architecture.gif)
 
----
-### Private Repos
-Add to your `.travis.yml` file.
-```yml
+
 
 Development...
 
