@@ -31,10 +31,6 @@ after_success:
 
 ```
 
-
-
-
-
 #### Add Jacoco Plugin
 ```xml
 <plugin>
