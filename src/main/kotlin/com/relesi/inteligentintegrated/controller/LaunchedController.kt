@@ -21,13 +21,13 @@ import java.text.SimpleDateFormat
 
 
 @RestController
-@RequestMapping("/api/launched")
+@RequestMapping("/api/launcheds")
 class LaunchedController(val launchedService: LaunchedService, val employeeService: EmployeeService) {
 
-    private val  dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+    private val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
 
-//    @Value("\${pagination.qty_by_page}")
-//    val qtyByPage: Int = 15
+    @Value("\${pagination.qty_by_page}")
+    val qtyByPage: Int = 15
 
     @GetMapping("/employee/{employeeId}")
     fun searchByEmployeeId(@PathVariable("employeeId") employeeId: String,
@@ -38,11 +38,11 @@ class LaunchedController(val launchedService: LaunchedService, val employeeServi
             ResponseEntity<Response<Page<LaunchedDto>>> {
 
         val response: Response<Page<LaunchedDto>> = Response<Page<LaunchedDto>>()
-       // val pageRequest: PageRequest = PageRequest.of(pag, qtyByPage, Sort.Direction.valueOf(dir), ord)
-        //val launcheds: Page<Launched> = launchedService.searchByEmployeeId(employeeId, pageRequest)
-        //val launchedsDto: Page<LaunchedDto> = launcheds.map { launched -> converterLaunchedDto(launched) }
+        val pageRequest: PageRequest = PageRequest.of(pag, qtyByPage, Sort.Direction.valueOf(dir), ord)
+        val launcheds: Page<Launched> = launchedService.searchByEmployeeId(employeeId, pageRequest)
+        val launchedsDto: Page<LaunchedDto> = launcheds.map { launched -> converterLaunchedDto(launched) }
 
-        //response.date = launchedsDto
+        response.date = launchedsDto
         return ResponseEntity.ok(response)
 
     }
@@ -77,13 +77,48 @@ class LaunchedController(val launchedService: LaunchedService, val employeeServi
         return ResponseEntity.ok(response)
     }
 
+    @PutMapping("/{id}")
+    fun update(@PathVariable("id") id: String, @Valid @RequestBody launchedDto: LaunchedDto, result: BindingResult): ResponseEntity<Response<LaunchedDto>>{
+
+        val response: Response<LaunchedDto> = Response<LaunchedDto>()
+        validateEmployee(launchedDto, result)
+        //launchedDto.id = id
+        val launched: Launched = converterDtoToLaunched(launchedDto, result)
+
+        if (result.hasErrors()){
+            result.allErrors.forEach{ error -> error.defaultMessage?.let{response.errors.add(it)}}
+            return ResponseEntity.badRequest().body(response)
+        }
+
+        launchedService.persist(launched)
+        response.date = converterLaunchedDto(launched)
+        return ResponseEntity.ok(response)
+
+    }
+
+    @DeleteMapping(value = ["/{id}"])
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    fun remove(@PathVariable("id") id: String): ResponseEntity<Response<String>>{
+
+        val response: Response<String> = Response<String>()
+        val launched: Launched? = launchedService.searchById(id)
+
+        if (launched == null) {
+            response.errors.add("Erro ao remover lançamento. Registro não encontrado para o id $id")
+            return ResponseEntity.badRequest().body(response)
+        }
+        launchedService.remove(id)
+        return ResponseEntity.ok(Response<String>())
+
+    }
+
     private fun converterDtoToLaunched(launchedDto: LaunchedDto, result: BindingResult): Launched {
         if (launchedDto.id != null){
             val lanc: Launched? = launchedService.searchById(launchedDto.id!!)
             if (lanc == null) result.addError(ObjectError("launched", "Launched not found..." ))
 
         }
-
+        
         return Launched(dateFormat.parse(launchedDto.date), TypeEnum.valueOf(launchedDto.type!!),
             launchedDto.employeesId!!, launchedDto.description,
            launchedDto.localization, launchedDto.id)
