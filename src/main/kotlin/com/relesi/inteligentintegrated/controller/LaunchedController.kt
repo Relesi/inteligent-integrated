@@ -118,7 +118,7 @@ class LaunchedController(val launchedService: LaunchedService, val employeeServi
             if (lanc == null) result.addError(ObjectError("launched", "Launched not found..." ))
 
         }
-        
+
         return Launched(dateFormat.parse(launchedDto.date), TypeEnum.valueOf(launchedDto.type!!),
             launchedDto.employeesId!!, launchedDto.description,
            launchedDto.localization, launchedDto.id)
