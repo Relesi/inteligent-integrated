@@ -13,7 +13,8 @@ import org.springframework.boot.runApplication
 @SpringBootApplication
 class InteligentIntegratedApplication(val companyRepository: CompanyRepository,
 val employeeRepository: EmployeeRepository): CommandLineRunner{
-	fun run (vararg args: String?){
+
+	override fun run (vararg args: String?){
 		companyRepository.deleteAll()
 		employeeRepository.deleteAll()
 
