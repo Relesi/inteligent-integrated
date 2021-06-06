@@ -14,6 +14,7 @@ import org.springframework.test.context.ActiveProfiles
 import kotlin.jvm.Throws
 
 @SpringBootTest
+@ActiveProfiles("intelligent-integration")
 @AutoConfigureDataMongo
 class CompanyServiceTest {
 

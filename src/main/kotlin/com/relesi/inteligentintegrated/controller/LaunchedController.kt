@@ -82,7 +82,7 @@ class LaunchedController(val launchedService: LaunchedService, val employeeServi
 
         val response: Response<LaunchedDto> = Response<LaunchedDto>()
         validateEmployee(launchedDto, result)
-        //launchedDto.id = id
+        launchedDto.id = id
         val launched: Launched = converterDtoToLaunched(launchedDto, result)
 
         if (result.hasErrors()){
