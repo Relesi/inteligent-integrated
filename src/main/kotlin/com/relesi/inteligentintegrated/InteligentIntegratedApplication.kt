@@ -8,28 +8,31 @@ import com.relesi.inteligentintegrated.repositories.EmployeeRepository
 import com.relesi.inteligentintegrated.utils.PasswordUtils
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.runApplication
+import org.springframework.boot.SpringApplication
 
 @SpringBootApplication
 class InteligentIntegratedApplication(val companyRepository: CompanyRepository,
-val employeeRepository: EmployeeRepository): CommandLineRunner{
+val employeeRepository: EmployeeRepository) : CommandLineRunner{
 
 	override fun run (vararg args: String?){
 		companyRepository.deleteAll()
 		employeeRepository.deleteAll()
 
-		val company: Company = Company("Company", "61486174000109")
-		companyRepository.save(company)
+		var company: Company = Company("Company", "61486174000109")
+		//companyRepository.save(company)
+		company = companyRepository.save(company)
 
-		val admin: Employee = Employee("Admin", "admin@company.com",
+		var admin: Employee = Employee("Admin", "admin@company.com",
 		PasswordUtils().generateBCrypt("123456"), "34732052061",
 			ProfileEnum.ROLE_ADMIN, company.id!!)
-		employeeRepository.save(admin)
+		//employeeRepository.save(admin)
+		admin = employeeRepository.save(admin)
 
-		val employee: Employee = Employee("Employee",
+		var employee: Employee = Employee("Employee",
 		"employee@company.com", PasswordUtils().generateBCrypt("123456"),
 			"92536359085", ProfileEnum.ROLE_USER, company.id!!)
-		employeeRepository.save(employee)
+		//employeeRepository.save(employee)
+		employee = employeeRepository.save(employee)
 
 		System.out.println("Company ID: " + company.id)
 		System.out.println("Admin ID: " + admin.id)
@@ -39,6 +42,6 @@ val employeeRepository: EmployeeRepository): CommandLineRunner{
 
 
 
-//fun main(args: Array<String>) {
-//	runApplication<InteligentIntegratedApplication>(*args)
-//}
+fun main(args: Array<String>) {
+	SpringApplication.run(InteligentIntegratedApplication::class.java, *args)
+}
