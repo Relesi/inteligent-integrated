@@ -21,10 +21,10 @@ import java.text.SimpleDateFormat
 
 
 @RestController
-@RequestMapping("/api/launched")
+@RequestMapping("/api/launcheds")
 class LaunchedController(val launchedService: LaunchedService, val employeeService: EmployeeService) {
 
-    private val  dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+    private val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
 
     @Value("\${pagination.qty_by_page}")
     val qtyByPage: Int = 15
@@ -95,7 +95,22 @@ class LaunchedController(val launchedService: LaunchedService, val employeeServi
         return ResponseEntity.ok(response)
 
     }
-   
+
+    @DeleteMapping(value = ["/{id}"])
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    fun remove(@PathVariable("id") id: String): ResponseEntity<Response<String>>{
+
+        val response: Response<String> = Response<String>()
+        val launched: Launched? = launchedService.searchById(id)
+
+        if (launched == null) {
+            response.errors.add("Erro ao remover lançamento. Registro não encontrado para o id $id")
+            return ResponseEntity.badRequest().body(response)
+        }
+        launchedService.remove(id)
+        return ResponseEntity.ok(Response<String>())
+
+    }
 
     private fun converterDtoToLaunched(launchedDto: LaunchedDto, result: BindingResult): Launched {
         if (launchedDto.id != null){
@@ -103,7 +118,7 @@ class LaunchedController(val launchedService: LaunchedService, val employeeServi
             if (lanc == null) result.addError(ObjectError("launched", "Launched not found..." ))
 
         }
-
+        
         return Launched(dateFormat.parse(launchedDto.date), TypeEnum.valueOf(launchedDto.type!!),
             launchedDto.employeesId!!, launchedDto.description,
            launchedDto.localization, launchedDto.id)
