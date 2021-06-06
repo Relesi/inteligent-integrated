@@ -4,11 +4,19 @@
 
 [![Revved up by Gradle Enterprise](https://img.shields.io/badge/Revved%20up%20by-Gradle%20Enterprise-06A0CE?logo=Gradle&labelColor=02303A)](https://ge.jetbrains.com/scans?search.rootProjectNames=Kotlin)
 
-
 [![Build Status](https://www.travis-ci.com/Relesi/inteligent-integrated.svg?branch=master)](https://www.travis-ci.com/Relesi/inteligent-integrated)
+
 ## Integrated Guide
 
+
 **Using gradle?** See [gradle example](https://github.com/Relesi/inteligent-integrated/tree/master/gradle/wrapper)
+
+
+### Gradle Setup 🐘
+
+This template is using [**Gradle Kotlin DSL**](https://docs.gradle.org/current/userguide/kotlin_dsl.html) as well as the [Plugin DSL](https://docs.gradle.org/current/userguide/plugins.html#sec:plugins_block) to setup the build.
+
+Dependencies are centralized inside the [Dependencies.kt](buildSrc/src/main/java/Dependencies.kt) file in the `buildSrc` folder. This provides convenient auto-completion when writing your gradle files.
 
 ### Travis Setup
 
@@ -17,9 +25,13 @@ Add to your `.travis.yml` file.
 language: java
 after_success:
   - bash <(curl -s https://codecov.io/bash)
+  
+ Private Repos
+  - Add to your `.travis.yml` file.
+
 ```
-### Produce Coverage Reports
-#### Add Jacoco plugin
+
+#### Add Jacoco Plugin
 ```xml
 <plugin>
   <groupId>org.jacoco</groupId>
@@ -41,20 +53,14 @@ after_success:
   </executions>
 </plugin>
 ```
----
+
 #### Controller
 
 https://spring.io/guides/tutorials/spring-boot-kotlin/
 
 ![](screenshots/model-view-controller-architecture.gif)
 
-### Private Repos
-Add to your `.travis.yml` file.
-```yml
+
 
 Development...
-
-    But, hey what actually MVC is??
     
-
-
