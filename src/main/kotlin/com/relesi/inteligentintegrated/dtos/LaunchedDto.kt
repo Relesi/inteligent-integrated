@@ -12,6 +12,6 @@ class LaunchedDto (
     val employeesId: String? = null,
     val description: String? = null,
     val localization: String? = null,
-    val id: String? = null
+    var id: String? = null
 )
 
