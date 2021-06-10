@@ -88,9 +88,9 @@ after_success:
 ```
 
 
-If our Kotlin files are in different locations, you will need to modify these entries in the POM.
+- If our Kotlin files are in different locations, you will need to modify these entries in the POM.
 
-To compile Kotlin modules and sources, we need to use kotlin-maven-plugin:
+- To compile Kotlin modules and sources, we need to use kotlin-maven-plugin:
 
 ```xml
 
