@@ -54,6 +54,85 @@ after_success:
 </plugin>
 ```
 
+#### 2.2. Setup
+
+- First, let’s create a Spring Boot 2 project and modify the POM to contain entries specifying the versions of Java and Kotlin with the dependencies:
+
+```xml
+<dependency>
+    <groupId>org.jetbrains.kotlin</groupId>
+    <artifactId>kotlin-stdlib-jre8</artifactId>
+    <version>1.2.71</version>
+</dependency>
+<dependency>
+    <groupId>org.jetbrains.kotlin</groupId>
+    <artifactId>kotlin-reflect</artifactId>
+    <version>1.2.71</version>
+</dependency>
+<dependency>
+    <groupId>com.fasterxml.jackson.module</groupId>
+    <artifactId>jackson-module-kotlin</artifactId>
+    <version>2.9.9</version>
+</dependency>
+
+
+
+```
+
+
+- Take note that we are specifying file locations for our Kotlin source and test files:
+```xml
+<sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
+<testSourceDirectory>${project.basedir}/src/test/kotlin</testSourceDirectory>
+
+```
+
+
+- If our Kotlin files are in different locations, you will need to modify these entries in the POM.
+
+- To compile Kotlin modules and sources, we need to use kotlin-maven-plugin:
+
+```xml
+
+<plugin>
+    <artifactId>kotlin-maven-plugin</artifactId>
+    <groupId>org.jetbrains.kotlin</groupId>
+    <version>1.1.2</version>
+    <configuration>
+        <compilerPlugins>
+            <plugin>spring</plugin>
+        </compilerPlugins>
+        <jvmTarget>1.8</jvmTarget>
+    </configuration>
+    <executions>
+        <execution>
+            <id>compile</id>
+            <phase>compile</phase>
+            <goals>
+                <goal>compile</goal>
+            </goals>
+        </execution>
+        <execution>
+            <id>test-compile</id>
+            <phase>test-compile</phase>
+            <goals>
+                <goal>test-compile</goal>
+            </goals>
+        </execution>
+    </executions>
+    <dependencies>
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-maven-allopen</artifactId>
+            <version>1.1.2</version>
+        </dependency>
+    </dependencies>
+</plugin>
+
+
+
+```
+
 #### Controller
 
 https://spring.io/guides/tutorials/spring-boot-kotlin/
