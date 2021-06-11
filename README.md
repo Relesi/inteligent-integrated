@@ -133,6 +133,13 @@ after_success:
 
 ```
 
+### Dokka
+
+- You can run Dokka from the command line or as part of your Ant, Maven, or Gradle build script. The recommended way to run Dokka is to add it to the Gradle build script for your module. Here’s the minimum required configuration of Dokka in a Gradle build script:
+
+![](screenshots/dokka.jpeg)
+
+
 #### Controller
 
 https://spring.io/guides/tutorials/spring-boot-kotlin/
