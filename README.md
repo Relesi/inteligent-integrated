@@ -145,8 +145,3 @@ after_success:
 https://spring.io/guides/tutorials/spring-boot-kotlin/
 
 ![](screenshots/model-view-controller-architecture.gif)
-
-
-
-Development...
-    
