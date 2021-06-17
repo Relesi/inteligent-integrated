@@ -116,7 +116,6 @@ class LaunchedController(val launchedService: LaunchedService, val employeeServi
         if (launchedDto.id != null){
             val lanc: Launched? = launchedService.searchById(launchedDto.id!!)
             if (lanc == null) result.addError(ObjectError("launched", "Launched not found..." ))
-
         }
 
         return Launched(dateFormat.parse(launchedDto.date), TypeEnum.valueOf(launchedDto.type!!),
@@ -139,5 +138,4 @@ class LaunchedController(val launchedService: LaunchedService, val employeeServi
         LaunchedDto(dateFormat.format(launched.date), launched.type.toString(),
             launched.description, launched.localization,
             launched.employeesId, launched.id)
-
 }

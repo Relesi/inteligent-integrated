@@ -5,6 +5,7 @@ import com.relesi.inteligentintegrated.documents.Employee
 import com.relesi.inteligentintegrated.enums.ProfileEnum
 import com.relesi.inteligentintegrated.repositories.CompanyRepository
 import com.relesi.inteligentintegrated.repositories.EmployeeRepository
+import com.relesi.inteligentintegrated.repositories.LaunchedRepository
 import com.relesi.inteligentintegrated.utils.PasswordUtils
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.autoconfigure.SpringBootApplication
@@ -14,11 +15,13 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 //@SpringBootApplication
 @SpringBootApplication(exclude = arrayOf(SecurityAutoConfiguration::class))
 class InteligentIntegratedApplication(val companyRepository: CompanyRepository,
-val employeeRepository: EmployeeRepository) : CommandLineRunner{
+									  val employeeRepository: EmployeeRepository,
+									  val launchedRepository: LaunchedRepository) : CommandLineRunner{
 
 	override fun run (vararg args: String?){
 		companyRepository.deleteAll()
 		employeeRepository.deleteAll()
+		launchedRepository.deleteAll()
 
 		var company: Company = Company("Company", "61486174000109")
 		//companyRepository.save(company)
