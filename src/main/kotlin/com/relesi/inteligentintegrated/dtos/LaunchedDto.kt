@@ -9,9 +9,9 @@ class LaunchedDto (
     @get:NotEmpty(message = "Type cannot be empty...")
     val type: String? = null,
 
-    val employeesId: String? = null,
     val description: String? = null,
     val localization: String? = null,
+    val employeesId: String? = null,
     var id: String? = null
 )
 

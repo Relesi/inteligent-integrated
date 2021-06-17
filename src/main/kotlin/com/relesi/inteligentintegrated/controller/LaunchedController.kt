@@ -66,8 +66,8 @@ class LaunchedController(val launchedService: LaunchedService, val employeeServi
         validateEmployee(launchedDto, result)
 
         if (result.hasErrors()){
-            //for (errors in result.allErrors) response.errors.add(errors.defaultMessage)
-            result.allErrors.forEach { errors -> errors.defaultMessage?.let { response.errors.add(it) } }
+           //for (error in result.allErrors) error.defaultMessage?.let { response.errors.add(it) }
+           result.allErrors.forEach { error -> error.defaultMessage?.let { response.errors.add(it) } }
             return ResponseEntity.badRequest().body(response)
         }
 
