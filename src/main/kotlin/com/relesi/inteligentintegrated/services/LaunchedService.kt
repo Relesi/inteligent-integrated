@@ -11,3 +11,4 @@ interface LaunchedService {
     fun persist(launched: Launched): Launched
     fun remove(id: String)
 }
+

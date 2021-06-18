@@ -71,11 +71,13 @@ class LaunchedController(val launchedService: LaunchedService, val employeeServi
             return ResponseEntity.badRequest().body(response)
         }
 
-        val launched: Launched = converterDtoToLaunched(launchedDto, result)
-        launchedService.persist(launched)
+        var launched: Launched = converterDtoToLaunched(launchedDto, result)
+        launched = launchedService.persist(launched)
         response.date = converterLaunchedDto(launched)
         return ResponseEntity.ok(response)
     }
+
+
 
     @PutMapping("/{id}")
     fun update(@PathVariable("id") id: String, @Valid @RequestBody launchedDto: LaunchedDto, result: BindingResult): ResponseEntity<Response<LaunchedDto>>{
@@ -100,8 +102,9 @@ class LaunchedController(val launchedService: LaunchedService, val employeeServi
     @PreAuthorize("hasAnyRole('ADMIN')")
     fun remove(@PathVariable("id") id: String): ResponseEntity<Response<String>>{
 
-        val response: Response<String> = Response<String>()
-        val launched: Launched? = launchedService.searchById(id)
+        //TODO
+        var response: Response<String> = Response<String>()
+        var launched: Launched? = launchedService.searchById(id)
 
         if (launched == null) {
             response.errors.add("Erro ao remover lançamento. Registro não encontrado para o id $id")
@@ -115,7 +118,8 @@ class LaunchedController(val launchedService: LaunchedService, val employeeServi
     private fun converterDtoToLaunched(launchedDto: LaunchedDto, result: BindingResult): Launched {
         if (launchedDto.id != null){
             val lanc: Launched? = launchedService.searchById(launchedDto.id!!)
-            if (lanc == null) result.addError(ObjectError("launched", "Launched not found..." ))
+            if (lanc == null)
+                result.addError(ObjectError("launched", "Launched not found..." ))
         }
 
         return Launched(dateFormat.parse(launchedDto.date), TypeEnum.valueOf(launchedDto.type!!),
