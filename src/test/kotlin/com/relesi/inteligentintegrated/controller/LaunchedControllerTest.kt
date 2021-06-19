@@ -73,6 +73,37 @@ class LaunchedControllerTest {
             .andExpect(jsonPath("$.erros").isEmpty())
     }
 
+    @Test
+    @WithMockUser
+    @Throws(Exception::class)
+    fun testPersistLaunchedEmployeeInvalid() {
+
+        BDDMockito.given<Employee>(employeeService?.searchById(idEmployee)).willReturn(null)
+
+        mvc!!.perform(
+            MockMvcRequestBuilders.post(urlBase)
+                .content(getJsonRequestPost())
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+        )
+            .andExpect(status().isBadRequest())
+            .andExpect(jsonPath("$.erros").value("Employee not found. non-existent ID."))
+            .andExpect(jsonPath("$.date").isEmpty())
+    }
+
+    @Test
+    @WithMockUser(username = "admin@admin.com", roles = arrayOf("ADMIN"))
+    @Throws(Exception::class)
+    fun testRemoveLaunched() {
+
+        BDDMockito.given<Launched>(launchedService?.searchById(idLaunched)).willReturn(getDataLaunched())
+
+        mvc!!.perform(MockMvcRequestBuilders.delete(urlBase + idLaunched)
+            .accept(MediaType.APPLICATION_JSON))
+        //TODO
+            //.andExpect(status().isOk())
+
+    }
 
 
     @Throws(JsonProcessingException::class)
