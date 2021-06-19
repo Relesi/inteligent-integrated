@@ -20,7 +20,7 @@ import org.springframework.test.context.ActiveProfiles
 import java.util.*
 
 @SpringBootTest
-@ActiveProfiles("intelligent-integration")
+@ActiveProfiles("test")
 @AutoConfigureDataMongo
 class LaunchedSeriveTest {
 

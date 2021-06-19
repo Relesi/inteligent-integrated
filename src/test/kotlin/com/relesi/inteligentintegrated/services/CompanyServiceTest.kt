@@ -5,16 +5,19 @@ import com.relesi.inteligentintegrated.repositories.CompanyRepository
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.runner.RunWith
 import org.mockito.BDDMockito
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.data.mongo.AutoConfigureDataMongo
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.test.context.ActiveProfiles
+import org.springframework.test.context.junit4.SpringRunner
 import kotlin.jvm.Throws
 
+@RunWith(SpringRunner::class)
 @SpringBootTest
-@ActiveProfiles("intelligent-integration")
+@ActiveProfiles("test")
 @AutoConfigureDataMongo
 class CompanyServiceTest {
 
