@@ -12,7 +12,7 @@ data class Launched (
     val employeesId: String,
     val description: String? = "",
     val localization: String? = "",
-    @Id val id: String? = null
+    @Id var id: String? = null
 
 )
 
