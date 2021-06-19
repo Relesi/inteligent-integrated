@@ -53,7 +53,7 @@ class LaunchedController(val launchedService: LaunchedService, val employeeServi
         val launched: Launched? = launchedService.searchById(id)
 
         if (launched == null){
-            response.errors.add("Launched not found for id $id")
+            response.erros.add("Launched not found for id $id")
             return ResponseEntity.badRequest().body(response)
         }
         response.date = converterLaunchedDto(launched)
@@ -67,12 +67,14 @@ class LaunchedController(val launchedService: LaunchedService, val employeeServi
 
         if (result.hasErrors()){
            //for (error in result.allErrors) error.defaultMessage?.let { response.errors.add(it) }
-           result.allErrors.forEach { error -> error.defaultMessage?.let { response.errors.add(it) } }
+           result.allErrors.forEach { error -> error.defaultMessage?.let { response.erros.add(it) } }
             return ResponseEntity.badRequest().body(response)
         }
 
-        var launched: Launched = converterDtoToLaunched(launchedDto, result)
-        launched = launchedService.persist(launched)
+        val launched: Launched = converterDtoToLaunched(launchedDto, result)
+
+        //launched = launchedService.persist(launched)
+        launchedService.persist(launched)
         response.date = converterLaunchedDto(launched)
         return ResponseEntity.ok(response)
     }
@@ -88,7 +90,7 @@ class LaunchedController(val launchedService: LaunchedService, val employeeServi
         val launched: Launched = converterDtoToLaunched(launchedDto, result)
 
         if (result.hasErrors()){
-            result.allErrors.forEach{ error -> error.defaultMessage?.let{response.errors.add(it)}}
+            result.allErrors.forEach{ error -> error.defaultMessage?.let{response.erros.add(it)}}
             return ResponseEntity.badRequest().body(response)
         }
 
@@ -107,7 +109,7 @@ class LaunchedController(val launchedService: LaunchedService, val employeeServi
         var launched: Launched? = launchedService.searchById(id)
 
         if (launched == null) {
-            response.errors.add("Erro ao remover lançamento. Registro não encontrado para o id $id")
+            response.erros.add("Erro ao remover lançamento. Registro não encontrado para o id $id")
             return ResponseEntity.badRequest().body(response)
         }
         launchedService.remove(id)
@@ -139,7 +141,10 @@ class LaunchedController(val launchedService: LaunchedService, val employeeServi
     }
 
     private fun converterLaunchedDto(launched: Launched): LaunchedDto =
-        LaunchedDto(dateFormat.format(launched.date), launched.type.toString(),
-            launched.description, launched.localization,
-            launched.employeesId, launched.id)
+        LaunchedDto(dateFormat.format(launched.date),
+            launched.type.toString(),
+            launched.description,
+            launched.localization,
+            launched.employeesId,
+            launched.id)
 }

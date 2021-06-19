@@ -18,7 +18,7 @@ import java.util.*
 
 
 @SpringBootTest
-//@ActiveProfiles("intelligent-integration")
+@ActiveProfiles("test")
 @AutoConfigureDataMongo
 class EmployeeServiceTest {
 
