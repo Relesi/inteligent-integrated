@@ -53,7 +53,7 @@ class LaunchedController(val launchedService: LaunchedService, val employeeServi
         val launched: Launched? = launchedService.searchById(id)
 
         if (launched == null){
-            response.errors.add("Launched not found for id $id")
+            response.erros.add("Launched not found for id $id")
             return ResponseEntity.badRequest().body(response)
         }
         response.date = converterLaunchedDto(launched)
@@ -67,15 +67,19 @@ class LaunchedController(val launchedService: LaunchedService, val employeeServi
 
         if (result.hasErrors()){
            //for (error in result.allErrors) error.defaultMessage?.let { response.errors.add(it) }
-           result.allErrors.forEach { error -> error.defaultMessage?.let { response.errors.add(it) } }
+           result.allErrors.forEach { error -> error.defaultMessage?.let { response.erros.add(it) } }
             return ResponseEntity.badRequest().body(response)
         }
 
         val launched: Launched = converterDtoToLaunched(launchedDto, result)
+
+        //launched = launchedService.persist(launched)
         launchedService.persist(launched)
         response.date = converterLaunchedDto(launched)
         return ResponseEntity.ok(response)
     }
+
+
 
     @PutMapping("/{id}")
     fun update(@PathVariable("id") id: String, @Valid @RequestBody launchedDto: LaunchedDto, result: BindingResult): ResponseEntity<Response<LaunchedDto>>{
@@ -86,7 +90,7 @@ class LaunchedController(val launchedService: LaunchedService, val employeeServi
         val launched: Launched = converterDtoToLaunched(launchedDto, result)
 
         if (result.hasErrors()){
-            result.allErrors.forEach{ error -> error.defaultMessage?.let{response.errors.add(it)}}
+            result.allErrors.forEach{ error -> error.defaultMessage?.let{response.erros.add(it)}}
             return ResponseEntity.badRequest().body(response)
         }
 
@@ -100,11 +104,12 @@ class LaunchedController(val launchedService: LaunchedService, val employeeServi
     @PreAuthorize("hasAnyRole('ADMIN')")
     fun remove(@PathVariable("id") id: String): ResponseEntity<Response<String>>{
 
-        val response: Response<String> = Response<String>()
-        val launched: Launched? = launchedService.searchById(id)
+        //TODO
+        var response: Response<String> = Response<String>()
+        var launched: Launched? = launchedService.searchById(id)
 
         if (launched == null) {
-            response.errors.add("Erro ao remover lançamento. Registro não encontrado para o id $id")
+            response.erros.add("Erro ao remover lançamento. Registro não encontrado para o id $id")
             return ResponseEntity.badRequest().body(response)
         }
         launchedService.remove(id)
@@ -115,7 +120,8 @@ class LaunchedController(val launchedService: LaunchedService, val employeeServi
     private fun converterDtoToLaunched(launchedDto: LaunchedDto, result: BindingResult): Launched {
         if (launchedDto.id != null){
             val lanc: Launched? = launchedService.searchById(launchedDto.id!!)
-            if (lanc == null) result.addError(ObjectError("launched", "Launched not found..." ))
+            if (lanc == null)
+                result.addError(ObjectError("launched", "Launched not found..." ))
         }
 
         return Launched(dateFormat.parse(launchedDto.date), TypeEnum.valueOf(launchedDto.type!!),
@@ -135,7 +141,10 @@ class LaunchedController(val launchedService: LaunchedService, val employeeServi
     }
 
     private fun converterLaunchedDto(launched: Launched): LaunchedDto =
-        LaunchedDto(dateFormat.format(launched.date), launched.type.toString(),
-            launched.description, launched.localization,
-            launched.employeesId, launched.id)
+        LaunchedDto(dateFormat.format(launched.date),
+            launched.type.toString(),
+            launched.description,
+            launched.localization,
+            launched.employeesId,
+            launched.id)
 }
