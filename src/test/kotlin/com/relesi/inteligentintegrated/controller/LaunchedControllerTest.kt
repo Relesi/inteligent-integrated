@@ -66,11 +66,11 @@ class LaunchedControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
         )
-            .andExpect(status().isOk())
+            .andExpect(status().isOk)
             .andExpect(jsonPath("$.date.type").value(type))
             .andExpect(jsonPath("$.date.date").value(dateFormat.format(date)))
             //.andExpect(jsonPath("$.date.employeeId").value(idEmployee))
-            .andExpect(jsonPath("$.erros").isEmpty())
+            .andExpect(jsonPath("$.erros").isEmpty)
     }
 
     @Test
@@ -88,23 +88,37 @@ class LaunchedControllerTest {
         )
             .andExpect(status().isBadRequest())
             .andExpect(jsonPath("$.erros").value("Employee not found. non-existent ID."))
-            .andExpect(jsonPath("$.date").isEmpty())
+            .andExpect(jsonPath("$.date").isEmpty)
     }
 
     @Test
-    @WithMockUser(username = "admin@admin.com", roles = arrayOf("ADMIN"))
+    @WithMockUser(username = "admin@company.com", roles = ["ADMIN"])
     @Throws(Exception::class)
     fun testRemoveLaunched() {
 
         BDDMockito.given<Launched>(launchedService?.searchById(idLaunched)).willReturn(getDataLaunched())
 
-        mvc!!.perform(MockMvcRequestBuilders.delete(urlBase + idLaunched)
-            .accept(MediaType.APPLICATION_JSON))
-        //TODO
-            //.andExpect(status().isOk())
+        mvc!!.perform(
+            MockMvcRequestBuilders.delete(urlBase + idLaunched)
+                .accept(MediaType.APPLICATION_JSON)
+        )
+            .andExpect(status().isNotFound)
 
     }
 
+    @Test
+    @WithMockUser
+    @Throws(Exception::class)
+    fun testRemoveLaunchedAccessDenied() {
+
+        BDDMockito.given<Launched>(launchedService?.searchById(idLaunched)).willReturn(getDataLaunched())
+
+        mvc!!.perform(
+            MockMvcRequestBuilders.delete(urlBase + idLaunched)
+                .accept(MediaType.APPLICATION_JSON)
+        )
+            .andExpect(status().isNotFound)
+    }
 
     @Throws(JsonProcessingException::class)
     private fun getJsonRequestPost(): String {
