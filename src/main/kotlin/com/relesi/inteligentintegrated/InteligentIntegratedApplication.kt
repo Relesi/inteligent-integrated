@@ -9,7 +9,6 @@ import com.relesi.inteligentintegrated.repositories.LaunchedRepository
 import com.relesi.inteligentintegrated.utils.PasswordUtils
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
 import org.springframework.boot.runApplication
 
