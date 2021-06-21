@@ -10,6 +10,7 @@ import com.relesi.inteligentintegrated.services.EmployeeService
 import com.relesi.inteligentintegrated.utils.PasswordUtils
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.BindingResult
+import org.springframework.validation.ObjectError
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -48,6 +49,17 @@ class LegalPersonRegisterController(
     }
 
     private fun validateExistingData(legalPersonRegisterDto: LegalPersonRegisterDto, result: BindingResult) {
+
+        val company: Company? = companyService.searchByEin(legalPersonRegisterDto.ein)
+        if (company != null) {
+            result.addError(ObjectError("company", "Existing Company..."))
+        }
+
+        val employeeSsn: Employee? = employeeService.searchBySsn(legalPersonRegisterDto.ssn)
+        if (employeeSsn != null) {
+            result.addError(ObjectError("employee", "CPF já existente."))
+        }
+
 
     }
 
