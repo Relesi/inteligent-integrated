@@ -57,7 +57,12 @@ class LegalPersonRegisterController(
 
         val employeeSsn: Employee? = employeeService.searchBySsn(legalPersonRegisterDto.ssn)
         if (employeeSsn != null) {
-            result.addError(ObjectError("employee", "CPF já existente."))
+            result.addError(ObjectError("employee", "SSN já existente..."))
+        }
+
+        val employeeEmail: Employee? = employeeService.searchByEmail(legalPersonRegisterDto.email)
+        if (employeeEmail != null) {
+            result.addError(ObjectError("employee", "Existing Email..."))
         }
 
 
