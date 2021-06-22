@@ -20,14 +20,12 @@ import javax.validation.Valid
 @RestController
 @RequestMapping("/api/legal-person")
 class LegalPersonRegisterController(
-    val companyService: CompanyService,
-    val employeeService: EmployeeService
-) {
+    val companyService: CompanyService, val employeeService: EmployeeService) {
+
     @PostMapping
     fun register(
         @Valid @RequestBody legalPersonRegisterDto: LegalPersonRegisterDto,
-        result: BindingResult
-    ): ResponseEntity<Response<LegalPersonRegisterDto>> {
+        result: BindingResult): ResponseEntity<Response<LegalPersonRegisterDto>> {
         val response: Response<LegalPersonRegisterDto> = Response<LegalPersonRegisterDto>()
 
         validateExistingData(legalPersonRegisterDto, result)
@@ -45,7 +43,6 @@ class LegalPersonRegisterController(
         response.date = converterLegalPersonRegisterDto(employee, company)
 
         return ResponseEntity.ok(response)
-
     }
 
     private fun validateExistingData(legalPersonRegisterDto: LegalPersonRegisterDto, result: BindingResult) {
@@ -57,10 +54,13 @@ class LegalPersonRegisterController(
 
         val employeeSsn: Employee? = employeeService.searchBySsn(legalPersonRegisterDto.ssn)
         if (employeeSsn != null) {
-            result.addError(ObjectError("employee", "CPF já existente."))
+            result.addError(ObjectError("employee", "SSN já existente..."))
         }
 
-
+        val employeeEmail: Employee? = employeeService.searchByEmail(legalPersonRegisterDto.email)
+        if (employeeEmail != null) {
+            result.addError(ObjectError("employee", "Existing Email..."))
+        }
     }
 
     private fun converterDtoToCompany(legalPersonRegisterDto: LegalPersonRegisterDto): Company =
