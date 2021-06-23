@@ -29,8 +29,8 @@ class LaunchedController(val launchedService: LaunchedService, val employeeServi
     @Value("\${pagination.qty_by_page}")
     val qtyByPage: Int = 15
 
-    @GetMapping("/employee/{employeeId}")
-    fun searchByEmployeeId(@PathVariable("employeeId") employeeId: String,
+     @GetMapping("/employee/{employeeId}")
+     fun searchByEmployeeId(@PathVariable("employeeId") employeeId: String,
                             @RequestParam("pag", defaultValue = "0") pag: Int,
                             @RequestParam("ord", defaultValue = "id") ord: String,
                             @RequestParam("dir", defaultValue = "DESC") dir: String):
