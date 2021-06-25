@@ -78,11 +78,7 @@ class LegalPersonRegisterController(
             employee.name, employee.email, "", employee.ssn,
             company.ein, company.businessName, employee.id
         )
-
-
 }
-
-
 
 
 
