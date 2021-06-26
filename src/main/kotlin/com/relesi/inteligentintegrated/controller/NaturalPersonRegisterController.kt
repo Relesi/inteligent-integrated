@@ -3,9 +3,11 @@ package com.relesi.inteligentintegrated.controller
 import com.relesi.inteligentintegrated.documents.Company
 import com.relesi.inteligentintegrated.documents.Employee
 import com.relesi.inteligentintegrated.dtos.NaturalPersonRegisterDto
+import com.relesi.inteligentintegrated.enums.ProfileEnum
 import com.relesi.inteligentintegrated.response.Response
 import com.relesi.inteligentintegrated.services.CompanyService
 import com.relesi.inteligentintegrated.services.EmployeeService
+import com.relesi.inteligentintegrated.utils.PasswordUtils
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.BindingResult
 import org.springframework.validation.ObjectError
@@ -20,8 +22,9 @@ import javax.validation.Valid
 class NaturalPersonRegisterController(val companyService: CompanyService, val employeeService: EmployeeService) {
 
     @PostMapping
-    fun register(@Valid  @RequestBody naturalPersonRegisterDto: NaturalPersonRegisterDto,
-                 result: BindingResult): ResponseEntity<Response<NaturalPersonRegisterDto>> {
+    fun register(
+        @Valid @RequestBody naturalPersonRegisterDto: NaturalPersonRegisterDto,
+        result: BindingResult): ResponseEntity<Response<NaturalPersonRegisterDto>> {
         val response: Response<NaturalPersonRegisterDto> = Response<NaturalPersonRegisterDto>()
 
         val company: Company? = companyService.searchByEin(naturalPersonRegisterDto.ein)
@@ -37,36 +40,41 @@ class NaturalPersonRegisterController(val companyService: CompanyService, val em
         response.date = converterNaturalPersonRegisterDto(employee, company!!)
 
         return ResponseEntity.ok(response)
-
-
-
     }
-
 
     private fun validateExistingData(naturalPersonRegisterDto: NaturalPersonRegisterDto, company: Company?, result: BindingResult) {
 
-        if (company == null){
+        if (company == null) {
             result.addError(ObjectError("company", "Unregistered company..."))
         }
 
-        val employeeSsn:Employee? = employeeService.searchBySsn(naturalPersonRegisterDto.ssn)
-        if (employeeSsn != null){
+        val employeeSsn: Employee? = employeeService.searchBySsn(naturalPersonRegisterDto.ssn)
+        if (employeeSsn != null) {
             result.addError(ObjectError("employee", "Existing Ssn..."))
         }
 
         val emnployeeEmail: Employee? = employeeService.searchByEmail(naturalPersonRegisterDto.email)
-        if (emnployeeEmail != null){
+        if (emnployeeEmail != null) {
             result.addError(ObjectError("employee", "Existing Email."))
         }
     }
 
-    private fun converterNaturalPersonRegisterDto(employee: Employee, company: Company): NaturalPersonRegisterDto? {
+    private fun converterDtoToEmplyee(naturalPersonRegisterDto: NaturalPersonRegisterDto, company: Company) =
+        Employee(
+            naturalPersonRegisterDto.name, naturalPersonRegisterDto.email,
+            PasswordUtils().generateBCrypt(naturalPersonRegisterDto.password), naturalPersonRegisterDto.ssn,
+            ProfileEnum.ROLE_USER, company.id.toString(),
+            naturalPersonRegisterDto.hourValue?.toDouble(), naturalPersonRegisterDto.qtyHoursWorkedDay?.toFloat(),
+            naturalPersonRegisterDto.qtyLunchHours?.toFloat(), naturalPersonRegisterDto.id
+        )
 
-    }
-
-    private fun converterDtoToEmplyee(naturalPersonRegisterDto: NaturalPersonRegisterDto, company: Company): Employee {
-
-    }
-
+    private fun converterNaturalPersonRegisterDto(employee: Employee, company: Company): NaturalPersonRegisterDto =
+        NaturalPersonRegisterDto(
+            employee.name, employee.email, "", employee.ssn,
+            company.ein, company.id.toString(), employee.hourValue.toString(),
+            employee.qtyHoursWorkedDay.toString(),
+            employee.qtyHoursWorkedDay.toString(),
+            employee.id
+        )
 
 }
