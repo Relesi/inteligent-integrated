@@ -8,6 +8,7 @@ import com.relesi.inteligentintegrated.services.CompanyService
 import com.relesi.inteligentintegrated.services.EmployeeService
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.BindingResult
+import org.springframework.validation.ObjectError
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -31,9 +32,9 @@ class NaturalPersonRegisterController(val companyService: CompanyService, val em
             return ResponseEntity.badRequest().body(response)
         }
 
-        //var employee: Employee = converterDtoToEmplyee(naturalPersonRegisterDto, company!!)
-       // employee = employeeService.persist(employee)
-        //response.date = converterNaturalPersonRegisterDto(employee, company!!)
+        var employee: Employee = converterDtoToEmplyee(naturalPersonRegisterDto, company!!)
+        employee = employeeService.persist(employee)
+        response.date = converterNaturalPersonRegisterDto(employee, company!!)
 
         return ResponseEntity.ok(response)
 
@@ -41,15 +42,31 @@ class NaturalPersonRegisterController(val companyService: CompanyService, val em
 
     }
 
-//    private fun converterNaturalPersonRegisterDto(employee: Employee, company: Company): NaturalPersonRegisterDto? {
-//
-//    }
-//
-//    private fun converterDtoToEmplyee(naturalPersonRegisterDto: NaturalPersonRegisterDto, company: Company): Employee {
-//
-//    }
 
     private fun validateExistingData(naturalPersonRegisterDto: NaturalPersonRegisterDto, company: Company?, result: BindingResult) {
 
+        if (company == null){
+            result.addError(ObjectError("company", "Unregistered company..."))
+        }
+
+        val employeeSsn:Employee? = employeeService.searchBySsn(naturalPersonRegisterDto.ssn)
+        if (employeeSsn != null){
+            result.addError(ObjectError("employee", "Existing Ssn..."))
+        }
+
+        val emnployeeEmail: Employee? = employeeService.searchByEmail(naturalPersonRegisterDto.email)
+        if (emnployeeEmail != null){
+            result.addError(ObjectError("employee", "Existing Email."))
+        }
     }
+
+    private fun converterNaturalPersonRegisterDto(employee: Employee, company: Company): NaturalPersonRegisterDto? {
+
+    }
+
+    private fun converterDtoToEmplyee(naturalPersonRegisterDto: NaturalPersonRegisterDto, company: Company): Employee {
+
+    }
+
+
 }
