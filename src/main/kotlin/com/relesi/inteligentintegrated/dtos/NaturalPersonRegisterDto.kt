@@ -28,7 +28,7 @@ data class NaturalPersonRegisterDto (
     @get:CNPJ(message = "Invalid")
     val ein: String = "", //Employer Identification Number
 
-    val companyId: String,
+    val companyId: String = "",
 
     val hourValue: String? = null,
     val qtyHoursWorkedDay: String? ? = null,
