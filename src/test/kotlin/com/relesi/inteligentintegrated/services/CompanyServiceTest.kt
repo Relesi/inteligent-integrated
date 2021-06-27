@@ -15,7 +15,7 @@ import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.junit4.SpringRunner
 import kotlin.jvm.Throws
 
-@RunWith(SpringRunner::class)
+
 @SpringBootTest
 @ActiveProfiles("test")
 @AutoConfigureDataMongo
