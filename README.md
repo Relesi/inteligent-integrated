@@ -22,8 +22,6 @@ Dependencies are centralized inside the [Dependencies.kt](buildSrc/src/main/java
 Add to your `.travis.yml` file.
 ```yml
 language: java
-after_success:
-  - bash <(curl -s https://codecov.io/bash)
   
  Private Repos
   - Add to your `.travis.yml` file.
